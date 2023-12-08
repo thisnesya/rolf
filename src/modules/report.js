@@ -7,6 +7,7 @@ export const getReportHandler = async function (type, number) {
     let statusCode = 404
     
     const report = await createVehicleReport(type, number)
+    console.log(report)
 
     if (report.result) {
         let parsed = parseData(report.msg)
@@ -29,6 +30,7 @@ export const getReportHandler = async function (type, number) {
 
 const parseData = (report) => {
     const content = report.data[0].content
+    console.log(content)
 
     if (!content.tech_data) return false
     if (!content.tech_data.brand) return false
@@ -43,6 +45,7 @@ const parseData = (report) => {
         markType: content.tech_data.brand.name.normalized,
         modelType: content.tech_data.model.name.normalized,
         regNum: content.identifiers.vehicle.reg_num,
+        vin: content.identifiers.vehicle.vin,
         productionYear: content.tech_data.year,
         engineType: content.tech_data.engine.fuel.type,
         enginePower: content.tech_data.engine.power.hp,

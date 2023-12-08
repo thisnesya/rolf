@@ -25,4 +25,5 @@ server.get('/getReport', { schema: getReportSchema }, async (rq, rl) => {
     rl.code(report.statusCode).send(report.result)
 })
 
-server.listen({ port: 3000, host: '91.228.221.88' })
+// server.listen({ port: 3000, host: '91.228.221.88' })
+server.listen({ port: 3000 })
