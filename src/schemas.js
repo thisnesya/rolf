@@ -11,6 +11,7 @@ export const getReportSchema = {
 
 const communicationSchema = {
     type: 'object',
+    required: ['mobilePhone', 'messenger', 'sms'],
     properties: {
         mobilePhone: { type: 'string' },
         messenger: { type: 'string' },
@@ -20,6 +21,11 @@ const communicationSchema = {
 
 const formSchema = {
     type: 'object',
+    required: [
+        'clientName', 'clientSurname', 'email',
+        'phoneNum',' ptDc', 'prsnData', 'markType',
+        'modelType', 'vin', 'regNum', 'communication'
+    ],
     properties: {
         clientName: { type: 'string' },
         clientSurname: { type: 'string' },

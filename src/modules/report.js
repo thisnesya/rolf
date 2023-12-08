@@ -7,7 +7,6 @@ export const getReportHandler = async function (type, number) {
     let statusCode = 404
     
     const report = await createVehicleReport(type, number)
-    console.log(report)
 
     if (report.result) {
         let parsed = parseData(report.msg)
@@ -30,16 +29,16 @@ export const getReportHandler = async function (type, number) {
 
 const parseData = (report) => {
     const content = report.data[0].content
-    console.log(content)
 
-    if (!content.tech_data) return false
-    if (!content.tech_data.brand) return false
-    if (!content.tech_data.model) return false
-    if (!content.identifiers.vehicle) return false
-    if (!content.tech_data.year) return false
-    if (!content.tech_data.engine) return false
-    if (!content.tech_data.body) return false
-    if (!content.tech_data.wheel) return false
+    if (!content.tech_data ||
+        !content.tech_data.brand ||
+        !content.tech_data.model ||
+        !content.identifiers.vehicle ||
+        !content.tech_data.year ||
+        !content.tech_data.engine ||
+        !content.tech_data.body ||
+        !content.tech_data.wheel
+    ) { return false }
 
     return {
         markType: content.tech_data.brand.name.normalized,
@@ -80,9 +79,7 @@ const createVehicleReport = async (type, number) => {
         await sleep(1000)
         const report = await getVehicleReport(createdReport.msg.data[0].uid)
         
-        if (report) {
-            return { result: true, msg: report }
-        }
+        if (report) return { result: true, msg: report }
     }
 
     return createdReport
@@ -114,12 +111,12 @@ const createReport = async (type, number) => {
 function generateToken(age = 60 * 60 * 24) {
     const timestamp = Math.floor((Date.now() / 1000) - 1000)
 
-    const passwordHash = crypto.createHash('md5').update(process.env.PASS).digest('base64')
+    const passwordHash = crypto.createHash('md5').update(process.env.ROLF_PASS).digest('base64')
 
     const hashWithSalt = `${timestamp}:${age}:${passwordHash}`
     const saltedHashB64 = crypto.createHash('md5').update(hashWithSalt).digest('base64')
 
-    const token = `${process.env.USER}:${timestamp}:${age}:${saltedHashB64}`
+    const token = `${process.env.ROLF_USER}:${timestamp}:${age}:${saltedHashB64}`
     const tokenB64 = Buffer.from(token).toString('base64')
 
     return tokenB64;

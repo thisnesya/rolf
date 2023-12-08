@@ -10,7 +10,7 @@ const server = fastify({
 
 server.post('/form', { schema: sendFormSchema }, async (rq, rl) => {
     let response = await axios.post(
-            'https://test-inspector.isb.rolf.ru/ti35/?p_json=',
+            process.env.ROLF_FORM_ENDPOINT,
             rq.body, {
             headers: {
                 'Content-Type': 'application/json'
@@ -25,5 +25,4 @@ server.get('/getReport', { schema: getReportSchema }, async (rq, rl) => {
     rl.code(report.statusCode).send(report.result)
 })
 
-// server.listen({ port: 3000, host: '91.228.221.88' })
-server.listen({ port: 3000 })
+server.listen({ port: process.env.PORT, host: process.env.PROD_HOST })
