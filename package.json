@@ -1,0 +1,14 @@
+{
+  "name": "rolf-prod",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.24.3"
+  }
+}
