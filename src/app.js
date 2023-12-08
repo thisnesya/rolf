@@ -1,6 +1,5 @@
 import fastify from "fastify"
 import axios from "axios"
-import 'dotenv/config'
 
 import { getReportHandler } from "./modules/report.js"
 import { getReportSchema, sendFormSchema } from "./schemas.js"
